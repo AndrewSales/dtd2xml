@@ -141,7 +141,14 @@ public class DTD {
 					.iterator();
 			while (childIterator.hasNext()) {
 				String child = (String) childIterator.next();
-				getElementDeclByName(child).addParent(parent);
+				ElementDecl decl = getElementDeclByName(child); 
+				//report undeclared elems, otherwise NPE results
+				if(decl == null){
+					System.err.println("[warning]: undeclared element '"+child+"'");
+				}
+				else{
+					decl.addParent(parent);
+				}
 			}
 		}
 	}
