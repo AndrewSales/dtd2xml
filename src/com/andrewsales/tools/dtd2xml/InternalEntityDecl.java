@@ -1,5 +1,6 @@
 package com.andrewsales.tools.dtd2xml;
 
+
 public class InternalEntityDecl implements EntityDecl {
 	
 	private String name;
@@ -12,7 +13,10 @@ public class InternalEntityDecl implements EntityDecl {
 
 	@Override
 	public String asXML() {
-		return "<internalEntity name='" +  name + "' value='" + value + "'/>";
+		String s = "";
+		return "<internalEntity name=\"" +  name + "\" value=\"" + 
+				(value.equals("\"") ? "&quot;" : UnicodeFormatter.encodeAsAsciiXml(value)) 
+				+ "\"/>";
 	}
 
 	@Override
