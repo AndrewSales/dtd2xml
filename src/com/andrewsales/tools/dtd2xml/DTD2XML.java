@@ -13,32 +13,49 @@ import org.xml.sax.helpers.XMLReaderFactory;
  * 
  * <pre>start =
     element dtd {
-        attribute systemId { text },
-        attribute publicId { text }?,
+        system-id-att,
+        public-id-att?,
         element element {
             attribute id { xsd:ID },
-            attribute name { xsd:NMTOKEN },
+            name-att,
             element model { (text | xref)+ },
             element attribute {
                 attribute mode { text }?,
-                attribute name { xsd:NMTOKEN },
+                name-att,
                 attribute type { text },
-                attribute value { text }?
+                value-att?
             }*,
             element parents {
                 xref*
             }
         }+,
         element notation {
-        	attribute name { xsd:NMTOKEN },
-        	(attribute publicId { text }|attribute systemId { text })
-        }*
+        	name-att,
+        	public-or-system-id
+        }*,
+        entity*
     }
 xref =
     element xref {
         attribute target { xsd:IDREF },
         text
-    }</pre>
+    }
+entity = internalEntity | externalEntity
+externalEntity =
+    element externalEntity {
+        name-att,
+        public-or-system-id+
+    }
+internalEntity =
+    element internalEntity {
+        name-att,
+        value-att
+    }
+public-id-att = attribute publicId { text } 
+system-id-att = attribute systemId { text }
+public-or-system-id = (public-id-att|system-id-att)
+name-att = attribute name { xsd:NMTOKEN }
+value-att = attribute value { text }</pre>
  * 
  * <p>Element declarations are sorted alphabetically by element name.
  * Attribute declarations are sorted alphabetically within elements.</p>

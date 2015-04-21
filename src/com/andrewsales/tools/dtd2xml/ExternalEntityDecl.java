@@ -7,7 +7,7 @@ public class ExternalEntityDecl implements EntityDecl {
 	private String systemId;
 	
 	public ExternalEntityDecl(String name, String publicId, String systemId){
-		this.name = name;
+		this.name = name.startsWith("%") ? name.substring(1) : name;
 		this.publicId = publicId;
 		this.systemId = systemId;
 	}
