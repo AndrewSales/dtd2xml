@@ -54,9 +54,13 @@
     <xsl:template match="internalEntity">
         <xsl:text>&lt;!ENTITY </xsl:text>
         <xsl:value-of select="@name"/>
-        <xsl:text> "&amp;#</xsl:text>
-        <xsl:value-of select="string-to-codepoints(@value)"/>
-        <xsl:text>;">&#xA;</xsl:text>
+        <xsl:text> "</xsl:text>
+        <xsl:for-each select="string-to-codepoints(@value)">
+            <xsl:text>&amp;#</xsl:text>
+            <xsl:value-of select="."/>
+            <xsl:text>;</xsl:text>
+        </xsl:for-each>
+        <xsl:text>">&#xA;</xsl:text>
     </xsl:template>
     
 </xsl:stylesheet>
